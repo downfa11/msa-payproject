@@ -5,10 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.example.common.SelfValidating;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 @Builder
 @Data
 @EqualsAndHashCode(callSuper = false)

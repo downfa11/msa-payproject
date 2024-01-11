@@ -35,5 +35,7 @@ public class RegisterMembershipCommand extends SelfValidating<RegisterMembership
         this.address = address;
         this.isValid = isValid;
         this.isCorp = isCorp;
+
+        this.validateSelf();
     }
 }
