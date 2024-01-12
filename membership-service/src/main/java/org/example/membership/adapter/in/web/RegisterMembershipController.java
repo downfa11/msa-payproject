@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.common.WebAdapter;
 import org.example.membership.application.in.RegisterMembershipCommand;
 import org.example.membership.application.in.RegisterMembershipUseCase;
+import org.example.membership.domain.Membership;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ public class RegisterMembershipController {
 
     private final RegisterMembershipUseCase registerMembershipUseCase;
     @PostMapping (path = "/membership/register")
-    void registerMembership(@RequestBody RegisterMembershipRequest request){
+    Membership registerMembership(@RequestBody RegisterMembershipRequest request){
         System.out.println("Hello World!");
         // request -> Command로 추상화
         // UseCase ~~(request x, command)
@@ -28,6 +29,6 @@ public class RegisterMembershipController {
                 .isCorp(request.isCorp())
                 .build();
 
-        registerMembershipUseCase.registerMembership(command);
+        return registerMembershipUseCase.registerMembership(command);
     }
 }

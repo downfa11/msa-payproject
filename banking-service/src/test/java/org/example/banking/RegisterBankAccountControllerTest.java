@@ -1,8 +1,7 @@
-package org.example.membership;
+package org.example.banking;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.membership.adapter.in.web.RegisterMembershipRequest;
-import org.example.membership.domain.Membership;
+import org.example.banking.adapter.in.web.RegisterBankAccountRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class RegisterMembershipControllerTest {
+public class RegisterBankAccountControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -27,22 +26,13 @@ public class RegisterMembershipControllerTest {
 
     @Test
     public void testRegisterMembership() throws Exception{
-        RegisterMembershipRequest request = new RegisterMembershipRequest("name","address","email",true);
-
-        Membership expect = Membership.generateMember(
-                new Membership.MembershipId("1"),
-                new Membership.MembershipName("name"),
-                new Membership.MembershipAddress("address"),
-        new Membership.MembershipEmail("email"),
-                new Membership.MembershipIsValid(true),
-                new Membership.MembershipIsCorp(false)
-        );
+        RegisterBankAccountRequest request = new RegisterBankAccountRequest("1","우리은행","1231414324",true);
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/membership/register")
+            MockMvcRequestBuilders.post("/banking/account/register")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(request))
-    ).andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(mapper.writeValueAsString(expect)));
+    ).andExpect(MockMvcResultMatchers.status().isOk());
+            //.andExpect(MockMvcResultMatchers.content().string(mapper.writeValueAsString(expect)));
     }
 }
