@@ -2,8 +2,8 @@ package org.example.membership.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.example.common.WebAdapter;
-import org.example.membership.application.port.in.ModifyMembershipCommand;
-import org.example.membership.application.port.in.ModifyMembershipUseCase;
+import org.example.membership.application.in.ModifyMembershipCommand;
+import org.example.membership.application.in.ModifyMembershipUseCase;
 import org.example.membership.domain.Membership;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

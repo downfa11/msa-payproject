@@ -1,4 +1,4 @@
-package org.example.membership.application.port.in;
+package org.example.membership.application.in;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = false)
 
 public class RegisterMembershipCommand extends SelfValidating<RegisterMembershipCommand> {
-
+// CRUD에서 c,u,d를 위한 기능을 위한 Command
     @NotNull
     private final String name;
     @NotNull
