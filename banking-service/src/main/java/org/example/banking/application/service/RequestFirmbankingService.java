@@ -41,7 +41,7 @@ public class RequestFirmbankingService implements RequestFirmbankingUseCase {
                 command.getToBankAccountNumber()
         ));
         UUID randomUUID = UUID.randomUUID();
-        requestJpaEntity.setUuid(randomUUID);
+        requestJpaEntity.setUuid(randomUUID.toString());
 
         if(result.getResultCode()==0){
             requestJpaEntity.setFirmbankingStatus(1); // success

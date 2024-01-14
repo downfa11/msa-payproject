@@ -12,24 +12,14 @@ import java.util.UUID;
 public class MoneyChangingRequest {
     @Getter private final String moneyChaningRequestId;
     @Getter private final String targetMembershipId;
-    @Getter private final ChangingType changingType;// 0:요청, 1:완료, 2:실패
-    enum ChangingType{
-        INCEASING,
-        DECREASING
-    }
-    @Getter private final int changingMoneyAmount;
-    @Getter private final ChangingMoneyStatus changingMoneyStatus;
+    @Getter private final int changingType;// 0:증액, 1:감액
 
-    enum ChangingMoneyStatus{
-        REQUESTED,
-        SUCCEDDED,
-        FAILED,
-        CANCELED
-    }
+    @Getter private final int changingMoneyAmount;
+    @Getter private final int changingMoneyStatus;// 0:요청, 1:완료, 2:실패
     @Getter private final String uuid;
     @Getter private final Date createAt;
 
-    public static MoneyChangingRequest moneyChangingRequest(
+    public static MoneyChangingRequest generateMoneyChangingRequest(
             MoneyChaningRequestId moneyChaningRequestId,
             TargetMembershipId targetMembershipId,
             changingType changingType,
@@ -41,7 +31,7 @@ public class MoneyChangingRequest {
                 moneyChaningRequestId.getMoneyChaningRequestId(),
                 targetMembershipId.getTargetMembershipId(),
                 changingType.getChangingType(),
-                Integer.parseInt(changingMoneyAmount.getChangingMoneyAmount()),
+                changingMoneyAmount.getChangingMoneyAmount(),
                 changingMoneyStatus.getChangingMoneyStatus(),
                 uuid.getUuid(),
                 new Date()
@@ -67,29 +57,29 @@ public class MoneyChangingRequest {
 
     @Value
     public static class changingType {
-        public changingType(ChangingType value){
+        public changingType(int value){
             this.changingType = value;
         }
 
-        ChangingType changingType;
+        int changingType;
     }
 
     @Value
     public static class ChangingMoneyAmount {
-        public ChangingMoneyAmount(String value){
+        public ChangingMoneyAmount(int value){
             this.changingMoneyAmount = value;
         }
 
-        String changingMoneyAmount;
+        int changingMoneyAmount;
     }
 
     @Value
     public static class changingMoneyStatus {
-        public changingMoneyStatus(ChangingMoneyStatus value){
+        public changingMoneyStatus(int value){
             this.changingMoneyStatus = value;
         }
 
-        ChangingMoneyStatus changingMoneyStatus;
+        int changingMoneyStatus;
     }
 
     @Value

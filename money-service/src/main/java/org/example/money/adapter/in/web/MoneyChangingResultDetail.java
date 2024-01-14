@@ -10,13 +10,10 @@ import org.example.money.domain.MoneyChangingRequest;
 @NoArgsConstructor
 public class MoneyChangingResultDetail {
     private String moneyChangingRequestId;
-    private MoneyChangingType moneyChangingType; // enum 0:증액, 1:감액
-    private MoneyChangingResultStatus moneyChangingResultStatus;
+    private int moneyChangingType; // enum 0:증액, 1:감액
+    private int moneyChangingResultStatus; // 0:성공, 실패, 잔액부족, 멤버십 없음, 변액 요청 없음
     private int amount;
 
-    public static MoenyChangingResultDetail moenyChangingResultDetail(MoneyChangingResult moneyChangingResult){
-
-    }
 }
 enum MoneyChangingType{
     INCREASE,

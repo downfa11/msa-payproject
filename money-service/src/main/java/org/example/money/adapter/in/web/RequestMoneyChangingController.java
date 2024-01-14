@@ -1,11 +1,9 @@
 package org.example.money.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
-import org.example.banking.application.in.RegisterBankAccountCommand;
-import org.example.banking.application.in.RegisterBankAccountUseCase;
-import org.example.banking.domain.RegisterBankAccount;
 import org.example.common.WebAdapter;
 import org.example.money.application.in.DecreaseMoneyRequestCommand;
+import org.example.money.application.in.DecreaseMoneyRequestUseCase;
 import org.example.money.application.in.IncreaseMoneyRequestCommand;
 import org.example.money.application.in.IncreaseMoneyRequestUseCase;
 import org.example.money.domain.MoneyChangingRequest;
@@ -30,10 +28,14 @@ public class RequestMoneyChangingController {
                 .targetMembershipId(request.getTargetMembershipId())
                 .Amount(request.getAmount()).build();
 
-        MoneyChangingRequest moneyChangingRequest = ;
+        MoneyChangingRequest moneyChangingRequest = increaseMoneyRequestUseCase.increaseMoneyRequest(command);
         // MoneyChangingRequest -> MoneyChangingResultDetail
+        MoneyChangingResultDetail resultDetail = new MoneyChangingResultDetail(
+                moneyChangingRequest.getMoneyChaningRequestId(),
+                0,0, moneyChangingRequest.getChangingMoneyAmount()
+        );
 
-        return increaseMoneyRequestUseCase.increaseMoneyRequest(command);
+        return resultDetail;
     }
 
     @PostMapping (path = "/money/decrease")
@@ -43,11 +45,15 @@ public class RequestMoneyChangingController {
         // UseCase ~~(request x, command)
 
         DecreaseMoneyRequestCommand command = DecreaseMoneyRequestCommand.builder()
-                .membershipId(request.getMembershipId())
-                .bankName(request.getBankName())
-                .bankAccountNumber(request.getBankAccountNumber())
-                .isValid(request.isValid()).build();
+                .targetMembershipId(request.getTargetMembershipId())
+                .Amount(request.getAmount()).build();
 
-        return decreaseMoneyRequestUseCase.decreaseMoneyRequest(command);
+        MoneyChangingRequest moneyChangingRequest = decreaseMoneyRequestUseCase.decreaseMoneyRequest(command);
+        // MoneyChangingRequest -> MoneyChangingResultDetail
+        MoneyChangingResultDetail resultDetail = new MoneyChangingResultDetail(
+                moneyChangingRequest.getMoneyChaningRequestId(),
+                0,0, moneyChangingRequest.getChangingMoneyAmount()
+        );
+        return resultDetail;
     }
 }
