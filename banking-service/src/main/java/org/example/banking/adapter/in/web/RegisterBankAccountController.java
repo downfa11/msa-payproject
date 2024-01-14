@@ -16,7 +16,7 @@ public class RegisterBankAccountController {
 
     private final RegisterBankAccountUseCase registerBankAccountUseCase;
     @PostMapping (path = "/banking/account/register")
-    RegisterBankAccount registerMembership(@RequestBody RegisterBankAccountRequest request){
+    RegisterBankAccount registerBankAccount(@RequestBody RegisterBankAccountRequest request){
         System.out.println("Hello Bank!");
         // request -> Command로 추상화
         // UseCase ~~(request x, command)
