@@ -1,11 +1,10 @@
-package org.example.money.application.in;
+package org.example.money.application.port.in;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.example.common.SelfValidating;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Builder

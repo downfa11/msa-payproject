@@ -2,8 +2,8 @@ package org.example.membership.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.example.common.WebAdapter;
-import org.example.membership.application.in.RegisterMembershipCommand;
-import org.example.membership.application.in.RegisterMembershipUseCase;
+import org.example.membership.application.port.in.RegisterMembershipCommand;
+import org.example.membership.application.port.in.RegisterMembershipUseCase;
 import org.example.membership.domain.Membership;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

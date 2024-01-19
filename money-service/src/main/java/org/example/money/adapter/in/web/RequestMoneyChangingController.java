@@ -2,10 +2,10 @@ package org.example.money.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.example.common.WebAdapter;
-import org.example.money.application.in.DecreaseMoneyRequestCommand;
-import org.example.money.application.in.DecreaseMoneyRequestUseCase;
-import org.example.money.application.in.IncreaseMoneyRequestCommand;
-import org.example.money.application.in.IncreaseMoneyRequestUseCase;
+import org.example.money.application.port.in.DecreaseMoneyRequestCommand;
+import org.example.money.application.port.in.DecreaseMoneyRequestUseCase;
+import org.example.money.application.port.in.IncreaseMoneyRequestCommand;
+import org.example.money.application.port.in.IncreaseMoneyRequestUseCase;
 import org.example.money.domain.MoneyChangingRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

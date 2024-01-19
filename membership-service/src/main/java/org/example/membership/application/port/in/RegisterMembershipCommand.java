@@ -1,4 +1,4 @@
-package org.example.membership.application.in;
+package org.example.membership.application.port.in;
 
 import lombok.Builder;
 import lombok.Data;

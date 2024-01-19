@@ -1,4 +1,4 @@
-package org.example.banking.application.in;
+package org.example.banking.application.port.in;
 
 import lombok.Builder;
 import lombok.Data;

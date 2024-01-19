@@ -1,4 +1,4 @@
-package org.example.money.application.in;
+package org.example.money.application.port.in;
 
 import org.example.money.domain.MoneyChangingRequest;
 

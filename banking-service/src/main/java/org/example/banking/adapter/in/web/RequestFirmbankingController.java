@@ -1,12 +1,9 @@
 package org.example.banking.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
-import org.example.banking.application.in.RegisterBankAccountCommand;
-import org.example.banking.application.in.RegisterBankAccountUseCase;
-import org.example.banking.application.in.RequestFirmbankingRequestCommand;
-import org.example.banking.application.in.RequestFirmbankingUseCase;
+import org.example.banking.application.port.in.RequestFirmbankingRequestCommand;
+import org.example.banking.application.port.in.RequestFirmbankingUseCase;
 import org.example.banking.domain.FirmbankingRequest;
-import org.example.banking.domain.RegisterBankAccount;
 import org.example.common.WebAdapter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

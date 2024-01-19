@@ -4,12 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.common.UseCase;
 import org.example.money.adapter.out.persistance.MemberMoneyJpaEntity;
 import org.example.money.adapter.out.persistance.MoneyChangingRequestMapper;
-import org.example.money.application.in.DecreaseMoneyRequestCommand;
-import org.example.money.application.in.DecreaseMoneyRequestUseCase;
-import org.example.money.application.in.IncreaseMoneyRequestCommand;
-import org.example.money.application.in.IncreaseMoneyRequestUseCase;
+import org.example.money.application.port.in.DecreaseMoneyRequestCommand;
+import org.example.money.application.port.in.DecreaseMoneyRequestUseCase;
 import org.example.money.application.port.out.DecreaseMoneyPort;
-import org.example.money.application.port.out.IncreaseMoneyPort;
 import org.example.money.domain.MemberMoney;
 import org.example.money.domain.MoneyChangingRequest;
 
