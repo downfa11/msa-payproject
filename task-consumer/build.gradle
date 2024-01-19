@@ -20,7 +20,7 @@ apply plugin: 'java-library'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-group = 'org.example.loggingconsumer' //변경사항
+group = 'org.example.taskconsumer' //변경사항
 version = '1.0.0'
 
 repositories {

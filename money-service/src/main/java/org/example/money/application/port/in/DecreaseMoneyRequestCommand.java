@@ -18,7 +18,7 @@ private final String targetMembershipId;
     @NotNull
     private final int Amount;
 
-    public DecreaseMoneyRequestCommand(String targetMembershipId, int amount) {
+    public DecreaseMoneyRequestCommand(@NotNull String targetMembershipId,@NotNull int amount) {
         this.targetMembershipId = targetMembershipId;
         this.Amount = amount;
 

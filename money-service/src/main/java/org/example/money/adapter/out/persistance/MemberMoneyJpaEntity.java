@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@Table(name ="money_changing_request")
+@Table(name ="member_money")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,10 +19,10 @@ public class MemberMoneyJpaEntity {
     @GeneratedValue
     private Long memberMoneyId;
 
-    private String membershipId;
+    private Long membershipId;
     private int balance;
 
-    public MemberMoneyJpaEntity(String membershipId, int balance) {
+    public MemberMoneyJpaEntity(Long membershipId, int balance) {
         this.membershipId = membershipId;
         this.balance = balance;
     }

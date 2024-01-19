@@ -31,7 +31,26 @@ public class RequestMoneyChangingController {
         MoneyChangingRequest moneyChangingRequest = increaseMoneyRequestUseCase.increaseMoneyRequest(command);
         // MoneyChangingRequest -> MoneyChangingResultDetail
         MoneyChangingResultDetail resultDetail = new MoneyChangingResultDetail(
-                moneyChangingRequest.getMoneyChaningRequestId(),
+                moneyChangingRequest.getMoneyChangingRequestId(),
+                0,0, moneyChangingRequest.getChangingMoneyAmount()
+        );
+
+        return resultDetail;
+    }
+
+    @PostMapping (path = "/money/increase-async")
+    MoneyChangingResultDetail increaseMoneyChangingRequestAsync(@RequestBody IncreaseMoneyChangingRequest request){
+        // request -> Command로 추상화
+        // UseCase ~~(request x, command)
+
+        IncreaseMoneyRequestCommand command = IncreaseMoneyRequestCommand.builder()
+                .targetMembershipId(request.getTargetMembershipId())
+                .Amount(request.getAmount()).build();
+
+        MoneyChangingRequest moneyChangingRequest = increaseMoneyRequestUseCase.increaseMoneyRequestAsync(command);
+        // MoneyChangingRequest -> MoneyChangingResultDetail
+        MoneyChangingResultDetail resultDetail = new MoneyChangingResultDetail(
+                moneyChangingRequest.getMoneyChangingRequestId(),
                 0,0, moneyChangingRequest.getChangingMoneyAmount()
         );
 
@@ -51,7 +70,25 @@ public class RequestMoneyChangingController {
         MoneyChangingRequest moneyChangingRequest = decreaseMoneyRequestUseCase.decreaseMoneyRequest(command);
         // MoneyChangingRequest -> MoneyChangingResultDetail
         MoneyChangingResultDetail resultDetail = new MoneyChangingResultDetail(
-                moneyChangingRequest.getMoneyChaningRequestId(),
+                moneyChangingRequest.getMoneyChangingRequestId(),
+                0,0, moneyChangingRequest.getChangingMoneyAmount()
+        );
+        return resultDetail;
+    }
+
+    @PostMapping (path = "/money/decrease-async")
+    MoneyChangingResultDetail decreaseMoneyChangingRequestAsync(@RequestBody DecreaseMoneyChangingRequest request){
+        // request -> Command로 추상화
+        // UseCase ~~(request x, command)
+
+        DecreaseMoneyRequestCommand command = DecreaseMoneyRequestCommand.builder()
+                .targetMembershipId(request.getTargetMembershipId())
+                .Amount(request.getAmount()).build();
+
+        MoneyChangingRequest moneyChangingRequest = decreaseMoneyRequestUseCase.decreaseMoneyRequestAsync(command);
+        // MoneyChangingRequest -> MoneyChangingResultDetail
+        MoneyChangingResultDetail resultDetail = new MoneyChangingResultDetail(
+                moneyChangingRequest.getMoneyChangingRequestId(),
                 0,0, moneyChangingRequest.getChangingMoneyAmount()
         );
         return resultDetail;

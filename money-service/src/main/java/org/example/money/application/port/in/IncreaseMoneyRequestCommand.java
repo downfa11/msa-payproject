@@ -18,7 +18,7 @@ public class IncreaseMoneyRequestCommand extends SelfValidating<IncreaseMoneyReq
     @NotNull
     private final int Amount;
 
-    public IncreaseMoneyRequestCommand(String targetMembershipId, int amount) {
+    public IncreaseMoneyRequestCommand(@NotNull String targetMembershipId,@NotNull int amount) {
         this.targetMembershipId = targetMembershipId;
         this.Amount = amount;
 

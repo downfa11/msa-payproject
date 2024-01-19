@@ -3,7 +3,6 @@ package org.example.money.adapter.in.web;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.money.domain.MoneyChangingRequest;
 
 @Data
 @AllArgsConstructor

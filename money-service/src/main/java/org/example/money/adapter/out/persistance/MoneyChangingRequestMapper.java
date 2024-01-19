@@ -10,7 +10,7 @@ public class MoneyChangingRequestMapper {
 
     public MoneyChangingRequest mapToDomainEntity(MoneyChangingRequestJpaEntity moneyChangingRequestJpaEntity){
         return MoneyChangingRequest.generateMoneyChangingRequest(
-                new MoneyChangingRequest.MoneyChaningRequestId(moneyChangingRequestJpaEntity.getMoneyChangingRequestId()+""),
+                new MoneyChangingRequest.MoneyChangingRequestId(moneyChangingRequestJpaEntity.getMoneyChangingRequestId()+""),
                 new MoneyChangingRequest.TargetMembershipId(moneyChangingRequestJpaEntity.getTargetMembershipId()),
                 new MoneyChangingRequest.changingType(moneyChangingRequestJpaEntity.getMoneyChangingType()),
                 new MoneyChangingRequest.ChangingMoneyAmount(moneyChangingRequestJpaEntity.getMoneyAmount()),

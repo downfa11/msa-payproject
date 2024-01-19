@@ -46,7 +46,7 @@ public class MoneyChangingRequestPersistanceAdapter implements IncreaseMoneyPort
         }
          catch (Exception e){
              entity = new MemberMoneyJpaEntity(
-                     membershipId.getMembershipId(),
+                     Long.parseLong(membershipId.getMembershipId()),
                      increaseMoneyAmount
              );
 
@@ -68,7 +68,7 @@ public class MoneyChangingRequestPersistanceAdapter implements IncreaseMoneyPort
         }
         catch (Exception e){
             entity = new MemberMoneyJpaEntity(
-                    membershipId.getMembershipId(),
+                    Long.parseLong(membershipId.getMembershipId()),
                     decreaseMoneyAmount
             );
 

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MoneyChangingRequest {
-    @Getter private final String moneyChaningRequestId;
+    @Getter private final String moneyChangingRequestId;
     @Getter private final String targetMembershipId;
     @Getter private final int changingType;// 0:증액, 1:감액
 
@@ -20,7 +20,7 @@ public class MoneyChangingRequest {
     @Getter private final Date createAt;
 
     public static MoneyChangingRequest generateMoneyChangingRequest(
-            MoneyChaningRequestId moneyChaningRequestId,
+            MoneyChangingRequestId moneyChangingRequestId,
             TargetMembershipId targetMembershipId,
             changingType changingType,
             ChangingMoneyAmount changingMoneyAmount,
@@ -28,7 +28,7 @@ public class MoneyChangingRequest {
             Uuid uuid
     ){
         return new MoneyChangingRequest(
-                moneyChaningRequestId.getMoneyChaningRequestId(),
+                moneyChangingRequestId.getMoneyChangingRequestId(),
                 targetMembershipId.getTargetMembershipId(),
                 changingType.getChangingType(),
                 changingMoneyAmount.getChangingMoneyAmount(),
@@ -38,12 +38,12 @@ public class MoneyChangingRequest {
         );
     }
     @Value
-    public static class MoneyChaningRequestId {
-        public MoneyChaningRequestId(String value){
-            this.moneyChaningRequestId = value;
+    public static class MoneyChangingRequestId {
+        public MoneyChangingRequestId(String value){
+            this.moneyChangingRequestId = value;
         }
 
-        String moneyChaningRequestId;
+        String moneyChangingRequestId;
     }
 
     @Value
