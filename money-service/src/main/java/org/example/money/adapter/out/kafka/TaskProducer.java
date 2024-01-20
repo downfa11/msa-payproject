@@ -30,6 +30,7 @@ public class TaskProducer implements SendRechargingMoneyTaskPort {
     @Override
     public void sendRechargingMoneyTaskPort(RechargingMoneyTask task) {
         this.sendTask(task.getTaskID(),task);
+        System.out.println("Task ID : " + task.getTaskID());
     }
 
     public void sendTask(String key, RechargingMoneyTask task) {

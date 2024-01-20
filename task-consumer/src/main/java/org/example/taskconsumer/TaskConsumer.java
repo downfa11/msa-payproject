@@ -12,49 +12,44 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 @Component
 public class TaskConsumer {
     private final KafkaConsumer<String, String> consumer;
     private final TaskResultProducer taskResultProducer;
-
     public TaskConsumer(@Value("${kafka.clusters.bootstrapservers}") String bootstrapServers,
-                        @Value("${task.topic") String topic,TaskResultProducer taskResultProducer) {
-
-        Properties props = new Properties();
-        props.put("bootstrap.servers",bootstrapServers);
-        props.put("group.id","my-group");
-        props.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
-        // Consume = deserializer
-
-        this.consumer=new KafkaConsumer<>(props);
-        consumer.subscribe(Collections.singletonList(topic));
+                        @Value("${task.topic}")String topic, TaskResultProducer taskResultProducer) {
         this.taskResultProducer = taskResultProducer;
+        Properties props = new Properties();
+        props.put("bootstrap.servers", bootstrapServers);
+        props.put("group.id", "my-group");
+        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        this.consumer = new KafkaConsumer<>(props);
+        consumer.subscribe(Collections.singletonList(topic));
         Thread consumerThread = new Thread(() -> {
-            try{
-                while(true){
-                    ConsumerRecords<String,String> records = consumer.poll(Duration.ofSeconds(1));
+            try {
+                while (true) {
                     ObjectMapper mapper = new ObjectMapper();
-                    for (ConsumerRecord<String,String > record : records){
-                        //jsonString 형태의 RechargingMoneyTask를 Parsing
-                        RechargingMoneyTask task;
+                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
+                    for (ConsumerRecord<String, String> record : records) {
+                        System.out.println("Received message: " + record.value());
 
-                        // task run, produce result
                         try {
-                             task = mapper.readValue(record.value(), RechargingMoneyTask.class);
-                        }catch (JsonProcessingException e){
+                            RechargingMoneyTask tasks = mapper.readValue(record.value(), RechargingMoneyTask.class);
+                            List<SubTask> subTaskList = tasks.getSubTaskList();
+
+                            for (SubTask subTask : subTaskList) {
+                                subTask.setStatus("success");
+                            }
+
+                            this.taskResultProducer.sendTaskResult(tasks.getTaskID(), tasks);
+
+                        } catch (JsonProcessingException e) {
                             throw new RuntimeException(e);
                         }
-
-                        for (SubTask subTask : task.getSubTaskList()){
-                            // all subtask maybe done
-
-                            subTask.setStatus("success");
-                        }
-
-                        this.taskResultProducer.sendTaskResult(task.getTaskID(),task);
                     }
                 }
             } finally {
@@ -62,7 +57,5 @@ public class TaskConsumer {
             }
         });
         consumerThread.start();
-
-
     }
 }
