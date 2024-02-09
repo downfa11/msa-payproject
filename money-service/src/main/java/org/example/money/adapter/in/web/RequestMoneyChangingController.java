@@ -2,10 +2,8 @@ package org.example.money.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.example.common.WebAdapter;
-import org.example.money.application.port.in.DecreaseMoneyRequestCommand;
-import org.example.money.application.port.in.DecreaseMoneyRequestUseCase;
-import org.example.money.application.port.in.IncreaseMoneyRequestCommand;
-import org.example.money.application.port.in.IncreaseMoneyRequestUseCase;
+import org.example.money.adapter.axon.common.IncreaseMemberMoneyCommand;
+import org.example.money.application.port.in.*;
 import org.example.money.domain.MoneyChangingRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +16,8 @@ public class RequestMoneyChangingController {
 
     private final IncreaseMoneyRequestUseCase increaseMoneyRequestUseCase;
     private final DecreaseMoneyRequestUseCase decreaseMoneyRequestUseCase;
+    private final CreateMemberMoneyUserCase createMemberMoneyUserCase;
+
     @PostMapping (path = "/money/increase")
     MoneyChangingResultDetail increaseMoneyChangingRequest(@RequestBody IncreaseMoneyChangingRequest request){
         System.out.println("Hello Money increase!");
@@ -92,5 +92,21 @@ public class RequestMoneyChangingController {
                 0,0, moneyChangingRequest.getChangingMoneyAmount()
         );
         return resultDetail;
+    }
+
+    @PostMapping(path="/money/create-member-money")
+    void createMemberMoney(@RequestBody CreateMemberMoneyRequest request){
+        createMemberMoneyUserCase.createMemberMoney(CreateMemberMoneyCommand.builder().membershipId(request.getMembershipId()).build());
+    }
+
+    @PostMapping(path="/money/increase-eda")
+    void increateMoneyChangingRequestByEvent(@RequestBody IncreaseMoneyChangingRequest request){
+        IncreaseMoneyRequestCommand command = IncreaseMoneyRequestCommand.builder()
+                .targetMembershipId(request.getTargetMembershipId())
+                .Amount(request.getAmount())
+                .build();
+
+        createMemberMoneyUserCase.increaseMoneyRequestByEvent(command);
+        // 임시로 createMemberMoneyUserCase에서 balance의 증감도 같이 하는중
     }
 }

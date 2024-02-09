@@ -2,6 +2,7 @@ package org.example.money.adapter.out.persistance;
 
 import lombok.RequiredArgsConstructor;
 import org.example.common.PersistanceAdapter;
+import org.example.money.application.port.out.CreateMemberMoneyPort;
 import org.example.money.application.port.out.DecreaseMoneyPort;
 import org.example.money.application.port.out.IncreaseMoneyPort;
 import org.example.money.domain.MemberMoney;
@@ -47,7 +48,7 @@ public class MoneyChangingRequestPersistanceAdapter implements IncreaseMoneyPort
          catch (Exception e){
              entity = new MemberMoneyJpaEntity(
                      Long.parseLong(membershipId.getMembershipId()),
-                     increaseMoneyAmount
+                     increaseMoneyAmount,""
              );
 
              entity= memberMoneyRepository.save(entity);
@@ -69,7 +70,7 @@ public class MoneyChangingRequestPersistanceAdapter implements IncreaseMoneyPort
         catch (Exception e){
             entity = new MemberMoneyJpaEntity(
                     Long.parseLong(membershipId.getMembershipId()),
-                    decreaseMoneyAmount
+                    decreaseMoneyAmount,""
             );
 
             entity= memberMoneyRepository.save(entity);

@@ -41,6 +41,7 @@ public class TaskConsumer {
                             RechargingMoneyTask tasks = mapper.readValue(record.value(), RechargingMoneyTask.class);
                             List<SubTask> subTaskList = tasks.getSubTaskList();
 
+                            // ?? 여기서 뭔가 해야하지 않겠니?
                             for (SubTask subTask : subTaskList) {
                                 subTask.setStatus("success");
                             }
