@@ -13,8 +13,14 @@ public interface RequestFirmbankingPort {
             FirmbankingRequest.toBankName toBankName,
             FirmbankingRequest.toBankAccountNumber toBankAccountNumber,
             FirmbankingRequest.moneyAmount moneyAmount,
-            FirmbankingRequest.firmbankingStatus firmbankingStatus);
+            FirmbankingRequest.firmbankingStatus firmbankingStatus,
+            FirmbankingRequest.FirmbankingAggregateIdentifier firmbankingAggregateIdentifier
+        );
 
     FirmbankingRequestJpaEntity modifyFirmbankingRequest(
             FirmbankingRequestJpaEntity entity);
+
+    FirmbankingRequestJpaEntity getFirmbankingRequest(
+            FirmbankingRequest.FirmbankingAggregateIdentifier firmbankingAggregateIdentifier
+    );
 }

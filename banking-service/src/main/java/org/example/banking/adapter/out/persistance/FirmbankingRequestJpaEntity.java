@@ -2,6 +2,7 @@ package org.example.banking.adapter.out.persistance;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -28,8 +29,9 @@ public class FirmbankingRequestJpaEntity {
     private int moneyAmount;
     private int firmbankingStatus;
     private String uuid;
+    private String aggregateIdentifier;
 
-    public FirmbankingRequestJpaEntity(String fromBankName, String fromBankAccountNumber, String toBankName, String toBankAccountNumber, int moneyAmount, int firmbankingStatus,UUID uuid) {
+    public FirmbankingRequestJpaEntity(String fromBankName, String fromBankAccountNumber, String toBankName, String toBankAccountNumber, int moneyAmount, int firmbankingStatus,UUID uuid,String aggregateIdentifier) {
         this.fromBankName = fromBankName;
         this.fromBankAccountNumber = fromBankAccountNumber;
         this.toBankName = toBankName;
@@ -37,6 +39,7 @@ public class FirmbankingRequestJpaEntity {
         this.moneyAmount = moneyAmount;
         this.firmbankingStatus = firmbankingStatus;
         this.uuid = uuid.toString();
+        this.aggregateIdentifier=aggregateIdentifier;
     }
 
     @Override
@@ -49,6 +52,8 @@ public class FirmbankingRequestJpaEntity {
                 ", toBankAccountNumber='" + toBankAccountNumber + '\'' +
                 ", moneyAmount=" + moneyAmount +
                 ", firmbankingStatus=" + firmbankingStatus +
+                ", uuid='" + uuid + '\'' +
+                ", aggregateIdentifier='" + aggregateIdentifier + '\'' +
                 '}';
     }
 }
