@@ -7,12 +7,14 @@ import org.springframework.stereotype.Component;
 public class RegisteredBankAccountMapper {
 
     public RegisterBankAccount mapToDomainEntity(RegisteredBankAccountJpaEntity registeredBankAccountJpaEntity){
-        return RegisterBankAccount.generateRegisterBankAccount(
+        return RegisterBankAccount.generateRegisteredBankAccount(
                 new RegisterBankAccount.RegisteredBankAccountId(registeredBankAccountJpaEntity.getRegisteredBankAccountId()+""),
-                new RegisterBankAccount.MembershipId(registeredBankAccountJpaEntity.getMembershipId()),
+                new RegisterBankAccount.MembershipId(registeredBankAccountJpaEntity.getMembershipId()+""),
                 new RegisterBankAccount.BankName(registeredBankAccountJpaEntity.getBankName()),
                 new RegisterBankAccount.BankAccountNumber(registeredBankAccountJpaEntity.getBankAccountNumber()),
-                new RegisterBankAccount.LinkedStatusIsValid(registeredBankAccountJpaEntity.isLinkedStatusIsValid())
+                new RegisterBankAccount.LinkedStatusIsValid(registeredBankAccountJpaEntity.isLinkedStatusIsValid()),
+                new RegisterBankAccount.AggregateIdentifier(registeredBankAccountJpaEntity.getAggregateIdentifier())
+
         );
     }
 }

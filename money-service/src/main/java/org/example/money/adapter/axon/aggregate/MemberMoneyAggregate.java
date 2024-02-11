@@ -8,8 +8,12 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.example.money.adapter.axon.common.IncreaseMemberMoneyCommand;
 import org.example.money.adapter.axon.common.MemberMoneyCreateCommand;
+import org.example.money.adapter.axon.common.RechargingRequestCreateCommand;
 import org.example.money.adapter.axon.event.IncreaseMemberMoneyEvent;
 import org.example.money.adapter.axon.event.MemberMoneyCreateEvent;
+import org.example.money.adapter.axon.event.RechargingRequestCreatedEvent;
+import org.example.money.application.port.out.GetRegisterBankAccountPort;
+import org.example.money.application.port.out.RegisteredBankAccountAggregateIdentifier;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -40,6 +44,23 @@ public class MemberMoneyAggregate {
         apply(new IncreaseMemberMoneyEvent(id, command.getMembershipId(),command.getAmount()));
         return id;
     }
+
+    @CommandHandler
+    public void handle(@NotNull RechargingRequestCreateCommand command, GetRegisterBankAccountPort getRegisterBankAccountPort){
+        log.info("RechargingRequestCreateCommand Handler");
+        id = command.getAggregateIdentifier();
+        RegisteredBankAccountAggregateIdentifier registeredBankAccountAggregateIdentifier = getRegisterBankAccountPort.getRegisteredBankAccount(command.getMembershipId());
+
+        apply(new RechargingRequestCreatedEvent(
+                command.getRechargingRequestId(),
+                command.getMembershipId(),
+                command.getAmount(),
+                registeredBankAccountAggregateIdentifier.getAggregateIdentifier(),
+                registeredBankAccountAggregateIdentifier.getBankName(),
+                registeredBankAccountAggregateIdentifier.getBankAccountNumber()
+        )); // Saga start
+    }
+
     @EventSourcingHandler
     public void on(MemberMoneyCreateEvent event){
         log.info("MemberMoneyCreateEvent Sourcing Handler");

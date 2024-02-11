@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.example.money.adapter.axon.common.IncreaseMemberMoneyCommand;
 import org.example.money.adapter.axon.common.MemberMoneyCreateCommand;
+import org.example.money.adapter.axon.common.RechargingRequestCreateCommand;
 import org.example.money.adapter.out.persistance.MemberMoneyJpaEntity;
 import org.example.money.application.port.in.CreateMemberMoneyCommand;
 import org.example.money.application.port.in.CreateMemberMoneyUserCase;
@@ -16,6 +17,7 @@ import org.example.money.domain.MemberMoney;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Transactional
 @Service
@@ -53,6 +55,23 @@ public class CreateMoneyRequestService implements CreateMemberMoneyUserCase {
                 new MemberMoney.MembershipId(command.getTargetMembershipId())
         );
 
+        String memberMoneyAggregateIdentifier = memberMoneyJpaEntity.getAggregateIdentifier();
+
+        // Saga의 시작을 알리는 RechargingRequestCreateCommand
+        commandGateway.send(new RechargingRequestCreateCommand(memberMoneyAggregateIdentifier, UUID.randomUUID().toString(),
+                command.getTargetMembershipId(),command.getAmount()))
+                .whenComplete((result,throwable) -> {
+                    if(throwable !=null){
+                        log.info("throwable = "+throwable);
+                        throw new RuntimeException(throwable);
+                    } else {
+                        log.info(" result = "+result);
+
+
+                    }
+                });
+
+        /*
         String aggregateIdentifier = memberMoneyJpaEntity.getAggregateIdentifier();
 
         commandGateway.send(IncreaseMemberMoneyCommand.builder()
@@ -72,6 +91,6 @@ public class CreateMoneyRequestService implements CreateMemberMoneyUserCase {
                                         ,command.getAmount()
                                 );
                             }
-                        });
+                        });*/
     }
 }

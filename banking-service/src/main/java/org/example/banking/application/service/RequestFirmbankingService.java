@@ -49,7 +49,8 @@ public class RequestFirmbankingService implements RequestFirmbankingUseCase, Upd
                 command.getFromBankName(),
                 command.getFromBankAccountNumber(),
                 command.getToBankName(),
-                command.getToBankAccountNumber()
+                command.getToBankAccountNumber(),
+                command.getMoneyAmount()
         ));
         UUID randomUUID = UUID.randomUUID();
         requestJpaEntity.setUuid(randomUUID.toString());
@@ -98,7 +99,8 @@ public class RequestFirmbankingService implements RequestFirmbankingUseCase, Upd
                                 command.getFromBankName(),
                                 command.getFromBankAccountNumber(),
                                 command.getToBankName(),
-                                command.getToBankAccountNumber()
+                                command.getToBankAccountNumber(),
+                                command.getMoneyAmount()
                         ));
 
                         if(firmbankingResult.getResultCode()==0){
