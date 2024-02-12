@@ -29,13 +29,14 @@ public class RegisterMembershipControllerTest {
     public void testRegisterMembership() throws Exception{
         RegisterMembershipRequest request = new RegisterMembershipRequest("name","address","email",true);
 
-        Membership membership = Membership.generateMember(
+        Membership expect = Membership.generateMember(
                 new Membership.MembershipId("1"),
                 new Membership.MembershipName("name"),
                 new Membership.MembershipAddress("address"),
         new Membership.MembershipEmail("email"),
                 new Membership.MembershipIsValid(true),
-                new Membership.MembershipIsCorp(false)
+                new Membership.MembershipIsCorp(false),
+                new Membership.RefreshToken("")
         );
 
         mockMvc.perform(
@@ -43,6 +44,6 @@ public class RegisterMembershipControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(request))
     ).andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(mapper.writeValueAsString(membership)));
+            .andExpect(MockMvcResultMatchers.content().string(mapper.writeValueAsString(expect)));
     }
 }

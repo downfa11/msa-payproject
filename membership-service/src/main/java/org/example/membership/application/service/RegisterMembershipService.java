@@ -4,12 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.example.common.UseCase;
 import org.example.membership.adapter.out.persistance.MembershipJpaEntity;
 import org.example.membership.adapter.out.persistance.MembershipMapper;
-import org.example.membership.application.in.RegisterMembershipCommand;
-import org.example.membership.application.in.RegisterMembershipUseCase;
+import org.example.membership.application.port.in.RegisterMembershipCommand;
+import org.example.membership.application.port.in.RegisterMembershipUseCase;
 import org.example.membership.application.port.out.RegisterMembershipPort;
 import org.example.membership.domain.Membership;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Member;
 
 @UseCase
 @RequiredArgsConstructor
@@ -28,7 +29,8 @@ public class RegisterMembershipService implements RegisterMembershipUseCase {
                new Membership.MembershipAddress(command.getAddress()),
                 new Membership.MembershipEmail(command.getEmail()),
                 new Membership.MembershipIsValid(command.isValid()),
-                new Membership.MembershipIsCorp(command.isCorp())
+                new Membership.MembershipIsCorp(command.isCorp()),
+               new Membership.RefreshToken("")
         );
 
        // entity -> Membership 도메인으로 변환해야한다.

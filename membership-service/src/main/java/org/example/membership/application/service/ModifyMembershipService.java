@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.common.UseCase;
 import org.example.membership.adapter.out.persistance.MembershipJpaEntity;
 import org.example.membership.adapter.out.persistance.MembershipMapper;
-import org.example.membership.application.in.ModifyMembershipCommand;
-import org.example.membership.application.in.ModifyMembershipUseCase;
+import org.example.membership.application.port.in.ModifyMembershipCommand;
+import org.example.membership.application.port.in.ModifyMembershipUseCase;
 import org.example.membership.application.port.out.ModifyMembershipPort;
 import org.example.membership.domain.Membership;
 
@@ -29,7 +29,8 @@ public class ModifyMembershipService implements ModifyMembershipUseCase {
                new Membership.MembershipAddress(command.getAddress()),
                 new Membership.MembershipEmail(command.getEmail()),
                 new Membership.MembershipIsValid(command.isValid()),
-                new Membership.MembershipIsCorp(command.isCorp())
+                new Membership.MembershipIsCorp(command.isCorp()),
+               new Membership.RefreshToken(command.getRefreshToken())
         );
 
        // entity -> Membership 도메인으로 변환해야한다.

@@ -1,0 +1,61 @@
+package org.example.membership.adapter.in.web.auth;
+
+import lombok.RequiredArgsConstructor;
+import org.example.common.WebAdapter;
+import org.example.membership.application.port.in.LoginMembershipCommand;
+import org.example.membership.application.port.in.LoginMembershipUseCase;
+import org.example.membership.application.port.in.RefreshTokenCommand;
+import org.example.membership.application.port.in.ValidateTokenCommand;
+import org.example.membership.domain.JWtToken;
+import org.example.membership.domain.Membership;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@WebAdapter
+@RestController
+@RequiredArgsConstructor
+public class AuthMembershipController {
+
+    private final LoginMembershipUseCase loginMembershipUseCase;
+
+    @PostMapping(path="/membership/login")
+    JWtToken loginMembership(@RequestBody LoginMembershipRequest request){
+
+        LoginMembershipCommand command = LoginMembershipCommand.builder()
+                .membershipId(request.getMembershipId())
+                .build();
+
+        return loginMembershipUseCase.LoginMembership(command);
+    }
+
+    @PostMapping(path="/membership/refresh-token")
+    JWtToken refreshToken(@RequestBody RefreshTokenRequest request){
+
+        RefreshTokenCommand command = RefreshTokenCommand.builder()
+                .refreshToken(request.getRefreshToken())
+                .build();
+
+        return loginMembershipUseCase.refreshJwtTokenByRefreshToken(command);
+    }
+
+    @PostMapping(path="/membership/token-validate")
+    boolean validateToken(@RequestBody ValidateTokenRequest request){
+
+        ValidateTokenCommand command = ValidateTokenCommand.builder()
+                .jwtToken(request.getJwtToken())
+                .build();
+
+        return loginMembershipUseCase.validateJwtToken(command);
+    }
+
+    @PostMapping(path="/membership/token-membership")
+    Membership getMembershipByJwtToken(@RequestBody ValidateTokenRequest request){
+
+        ValidateTokenCommand command = ValidateTokenCommand.builder()
+                .jwtToken(request.getJwtToken())
+                .build();
+
+        return loginMembershipUseCase.getMembershipByJwtToken(command);
+    }
+}
