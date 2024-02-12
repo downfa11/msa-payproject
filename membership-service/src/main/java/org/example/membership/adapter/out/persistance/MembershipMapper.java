@@ -3,6 +3,8 @@ package org.example.membership.adapter.out.persistance;
 import org.example.membership.domain.Membership;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Member;
+
 @Component
 public class MembershipMapper {
 
@@ -13,7 +15,8 @@ public class MembershipMapper {
                 new Membership.MembershipAddress(membershipJpaEntity.getAddress()),
                 new Membership.MembershipEmail(membershipJpaEntity.getEmail()),
                 new Membership.MembershipIsValid(membershipJpaEntity.isValid()),
-                new Membership.MembershipIsCorp(membershipJpaEntity.isCorp())
+                new Membership.MembershipIsCorp(membershipJpaEntity.isCorp()),
+                new Membership.RefreshToken(membershipJpaEntity.getRefreshToken())
         );
     }
 }

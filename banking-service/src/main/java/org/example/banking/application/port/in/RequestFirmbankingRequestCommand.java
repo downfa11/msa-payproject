@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = false)
 
 public class RequestFirmbankingRequestCommand extends SelfValidating<RequestFirmbankingRequestCommand> {
-// CRUD에서 c,u,d를 위한 기능을 위한 Command
     @NotNull
     private final String fromBankName;
     @NotNull
