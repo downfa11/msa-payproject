@@ -1,5 +1,5 @@
 FROM gradle:jkd11-alpine as builder
-WORDIR /workspace/app
+WORKDIR /workspace/app
 COPY . /workspace/app/
 RUN ./gradlew build -p ${MODULE}
 FROM openjdk:11-jre-slim
