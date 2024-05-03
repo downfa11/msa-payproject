@@ -1,4 +1,4 @@
-FROM gradle:jkd11-alpine as builder
+FROM gradle:jdk11-alpine as builder
 WORKDIR /workspace/app
 COPY . /workspace/app/
 RUN ./gradlew build -p ${MODULE}
