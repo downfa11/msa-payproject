@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.example.banking.adapter.axon.command.CreateFirmbankingRequestCommand;
@@ -27,7 +28,7 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 @Data
 @Slf4j
 public class FirmbankingRequestAggregate {
-    @TargetAggregateIdentifier
+    @AggregateIdentifier
     private String id;
 
     private String fromBankName;

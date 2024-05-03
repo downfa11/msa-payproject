@@ -39,9 +39,9 @@ public class MoneyRechargeSaga {
     public void handle(RechargingRequestCreatedEvent event){
         log.info("RechargingRequestCreatedEvent start Saga");
 
-        String checkRegisteredBankAccountId = UUID.randomUUID().toString();
+        String checkRegisteredBankAccountId = event.getRechargingRequestId();
         SagaLifecycle.associateWith("checkRegisteredBankAccountId",checkRegisteredBankAccountId);
-
+        log.info("event.aggregateIdentifier : "+event.getRegisteredBankAccountAggregateIdentifier());
         // recharge request
         // Check BankAccount Register, axon server->banking-service->Common
         commandGateway.send(new CheckRegisteredBankAccountCommand(
@@ -55,6 +55,7 @@ public class MoneyRechargeSaga {
         )).whenComplete(
                 (result,throwable) -> {
                     if(throwable !=null){
+                        throwable.printStackTrace();
                         log.info("CheckRegisteredBankAccountCommand failed :"+throwable);
                         throw new RuntimeException(throwable);
                     } else {
@@ -71,9 +72,9 @@ public class MoneyRechargeSaga {
         log.info("CheckedRegisteredBankAccountEvent saga: " + event.toString());
         boolean status = event.isChecked();
         if (status) {
-            System.out.println("CheckedRegisteredBankAccountEvent event success");
+            log.info("CheckedRegisteredBankAccountEvent event success");
         } else {
-            System.out.println("CheckedRegisteredBankAccountEvent event Failed");
+            log.info("CheckedRegisteredBankAccountEvent event Failed");
         }
 
         String requestFirmbankingId = UUID.randomUUID().toString();
@@ -105,20 +106,20 @@ public class MoneyRechargeSaga {
 
     @SagaEventHandler(associationProperty = "requestFirmbankingId")
     public void handle(RequestFirmbankingFinishedEvent event, IncreaseMoneyPort increaseMoneyPort) {
-        System.out.println("RequestFirmbankingFinishedEvent saga: " + event.toString());
+        log.info("RequestFirmbankingFinishedEvent saga: " + event.toString());
         boolean status = event.getStatus() == 0;
         if (status) {
-            System.out.println("RequestFirmbankingFinishedEvent success");
+            log.info("RequestFirmbankingFinishedEvent success");
         } else {
-            System.out.println("RequestFirmbankingFinishedEvent Failed");
+            log.info("RequestFirmbankingFinishedEvent Failed");
         }
 
         // DB Update 명령.
-        MemberMoneyJpaEntity resultEntity =
-                increaseMoneyPort.increaseMoney(
-                        new MemberMoney.MembershipId(event.getMembershipId())
-                        , event.getMoneyAmount()
-                );
+        MemberMoneyJpaEntity resultEntity =null;
+                //increaseMoneyPort.increaseMoney(
+                //        new MemberMoney.MembershipId(event.getMembershipId())
+                //        , event.getMoneyAmount()
+                //);
 
         if (resultEntity == null) {
             // 실패 시, 롤백 이벤트

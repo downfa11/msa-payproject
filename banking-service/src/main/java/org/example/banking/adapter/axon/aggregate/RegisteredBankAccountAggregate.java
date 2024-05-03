@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.example.banking.adapter.axon.command.CreateRegisteredBankAcountCommand;
@@ -23,7 +24,7 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 @Data
 @Slf4j
 public class RegisteredBankAccountAggregate {
-    @TargetAggregateIdentifier
+    @AggregateIdentifier
     private String id;
 
     private String membershipId;
@@ -38,6 +39,7 @@ public class RegisteredBankAccountAggregate {
         apply(new CreateRegisteredBankAcountEvent(command.getMembershipId(),command.getBankName(),command.getBankAccountNumber()));
     }
 
+    @CommandHandler
     public void handle(@NotNull CheckRegisteredBankAccountCommand command, RequestBankAccountInfoPort bankAccountInfoPort){
         log.info("CheckRegisteredBankAccountCommand Handler");
         id = command.getAggregateIdentifier();
