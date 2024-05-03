@@ -3,7 +3,7 @@ package org.example.membership.adapter.out.persistance;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.common.PersistanceAdapter;
-import org.example.membership.adapter.out.vault.VaultAdapter;
+//import org.example.membership.adapter.out.vault.VaultAdapter;
 import org.example.membership.application.port.out.FindMembershipPort;
 import org.example.membership.application.port.out.ModifyMembershipPort;
 import org.example.membership.application.port.out.RegisterMembershipPort;
@@ -15,15 +15,15 @@ import org.example.membership.domain.Membership;
 public class MembershipPersistanceAdapter implements RegisterMembershipPort, FindMembershipPort, ModifyMembershipPort {
 
     private final SpringDataMembershipRepository membershipRepository;
-    private final VaultAdapter vaultAdapter;
+    //private final VaultAdapter vaultAdapter;
     @Override
     public MembershipJpaEntity createMembership(Membership.MembershipName membershipName,Membership.MembershipAddress membershipAddress, Membership.MembershipEmail membershipEmail,  Membership.MembershipIsValid membershipIsValid, Membership.MembershipIsCorp membershipIsCorp,Membership.RefreshToken refreshToken) {
 
-        String encryptedEmail = vaultAdapter.encrypt(membershipEmail.getEmailValue());
+        //String encryptedEmail = vaultAdapter.encrypt(membershipEmail.getEmailValue());
         MembershipJpaEntity jpaEntity = new MembershipJpaEntity(
                 membershipName.getNameValue(),
                 membershipAddress.getAddressValue(),
-                encryptedEmail,
+                membershipEmail.getEmailValue(),
                 membershipIsValid.isValidValue(),
                 membershipIsCorp.isCorpValue(),
                 ""
@@ -44,19 +44,19 @@ public class MembershipPersistanceAdapter implements RegisterMembershipPort, Fin
     public MembershipJpaEntity findMembership(Membership.MembershipId membershipId) {
         MembershipJpaEntity membershipJpaEntity = membershipRepository.getById(Long.parseLong(membershipId.getMembershipId()));
         String encryptedEmail = membershipJpaEntity.getEmail();
-        String decrptedEmail = vaultAdapter.decrypt(encryptedEmail);
-        membershipJpaEntity.setEmail(decrptedEmail);
+        //String decrptedEmail = vaultAdapter.decrypt(encryptedEmail);
+        membershipJpaEntity.setEmail(encryptedEmail);
         return membershipRepository.getById(Long.parseLong(membershipId.getMembershipId()));
     }
 
     @Override
     public MembershipJpaEntity modifyMembership(Membership.MembershipId membershipId, Membership.MembershipName membershipName, Membership.MembershipAddress membershipAddress, Membership.MembershipEmail membershipEmail, Membership.MembershipIsValid membershipIsValid, Membership.MembershipIsCorp membershipIsCorp, Membership.RefreshToken refreshToken) {
         MembershipJpaEntity entity = membershipRepository.getById(Long.parseLong(membershipId.getMembershipId()));
-        String encryptedEmail = vaultAdapter.encrypt(membershipEmail.getEmailValue());
+        //String encryptedEmail = vaultAdapter.encrypt(membershipEmail.getEmailValue());
 
         entity.setName(membershipName.getNameValue());
         entity.setAddress(membershipAddress.getAddressValue());
-        entity.setEmail(encryptedEmail);
+        entity.setEmail(membershipEmail.getEmailValue());
         entity.setCorp(membershipIsCorp.isCorpValue());
         entity.setValid(membershipIsValid.isValidValue());
         entity.setRefreshToken(refreshToken.getRefreshToken());

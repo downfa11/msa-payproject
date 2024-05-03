@@ -1,4 +1,4 @@
-package org.example.membership;
+/*package org.example.membership;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,3 +25,4 @@ public class VaultConfig {
         return new VaultTemplate(endpoint, ()-> VaultToken.of(vaultToken));
     }
 }
+*/

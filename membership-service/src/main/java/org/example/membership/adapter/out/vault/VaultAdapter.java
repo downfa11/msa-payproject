@@ -1,5 +1,5 @@
 package org.example.membership.adapter.out.vault;
-
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.vault.core.VaultKeyValueOperations;
@@ -32,4 +32,4 @@ public class VaultAdapter {
             throw new RuntimeException(e);
         }
     }
-}
+}*/
