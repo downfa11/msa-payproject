@@ -47,4 +47,6 @@ jobs:
       with:
         repository: downfa11/k8s-helm-chart
         path: helm-chart
+        ref: main
+        ssh-key: ${{ secrets.HELM_CHARTS_REPO_KEY }}
         
